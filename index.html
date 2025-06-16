@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Agri Fertilizer E-Commerce App</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Material+Icons" rel="stylesheet" />
+   
+</head>
+<body>
+  <header role="banner" aria-label="Site Header">
+    <div class="header-inner container">
+      <a href="#" class="logo" aria-label="Agri Shop Home">AgriShop</a>
+      <div class="search-container">
+        <input type="search" placeholder="Search fertilizers, tools, seeds..." aria-label="Search products" id="search-input" class="search-input" />
+        <span class="material-icons search-icon" aria-hidden="true">search</span>
+      </div>
+      <nav class="main-nav" aria-label="Primary Navigation">
+        <a href="#" data-category="all" class="nav-link active" tabindex="0">All</a>
+        <a href="#" data-category="fertilizers" class="nav-link" tabindex="0">Fertilizers</a>
+        <a href="#" data-category="tools" class="nav-link" tabindex="0">Tools</a>
+        <a href="#" data-category="seeds" class="nav-link" tabindex="0">Seeds</a>
+      </nav>
+      <button aria-label="Open Cart" aria-haspopup="true" aria-expanded="false" id="cart-button" class="cart-button" aria-controls="cart-sidebar">
+        <span class="material-icons">shopping_cart</span>
+        <span class="cart-count" aria-live="polite" aria-atomic="true" id="cart-count">0</span>
+      </button>
+    </div>
+  </header>
+
+  <main id="app">
+    <aside class="filters-sidebar" aria-label="Product Filters" tabindex="0" id="filters-sidebar">
+      <h2>Filter Products</h2>
+      <div class="filter-section" aria-label="Category Filter">
+        <h3>Category</h3>
+        <div>
+          <div class="filter-item">
+            <input type="checkbox" id="filter-cat-fertilizers" value="fertilizers" checked />
+            <label for="filter-cat-fertilizers">Fertilizers</label>
+          </div>
+          <div class="filter-item">
+            <input type="checkbox" id="filter-cat-tools" value="tools" checked />
+            <label for="filter-cat-tools">Tools</label>
+          </div>
+          <div class="filter-item">
+            <input type="checkbox" id="filter-cat-seeds" value="seeds" checked />
+            <label for="filter-cat-seeds">Seeds</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="filter-section" aria-label="Price Filter">
+        <h3>Price Range</h3>
+        <div class="price-range-inputs">
+          <input type="number" id="price-min" placeholder="Min" aria-label="Minimum price" min="0" step="1" />
+          <input type="number" id="price-max" placeholder="Max" aria-label="Maximum price" min="0" step="1" />
+        </div>
+      </div>
+
+      <div class="filter-section" aria-label="Ratings Filter">
+        <h3>Minimum Rating</h3>
+        <select id="rating-filter" aria-label="Filter by minimum rating">
+          <option value="0" selected>All Ratings</option>
+          <option value="1">1 Star & Up</option>
+          <option value="2">2 Stars & Up</option>
+          <option value="3">3 Stars & Up</option>
+          <option value="4">4 Stars & Up</option>
+          <option value="5">5 Stars</option>
+        </select>
+      </div>
+
+      <div class="filter-section" aria-label="Brand Filter">
+        <h3>Brands</h3>
+        <div id="brand-filters">
+          <!-- brands dynamic -->
+        </div>
+      </div>
+      <button id="clear-filters-btn" aria-label="Clear all filters" class="btn-primary" style="margin-top:16px; width:100%;">Clear Filters</button>
+    </aside>
+
+    <section class="products-section" aria-label="Product List and Controls">
+      <div class="products-controls">
+        <div class="products-count" id="products-count">Loading products...</div>
+        <select id="sort-select" class="sort-select" aria-label="Sort products">
+          <option value="default">Sort By: Featured</option>
+          <option value="price-asc">Price: Low to High</option>
+          <option value="price-desc">Price: High to Low</option>
+          <option value="rating-desc">Rating: High to Low</option>
+          <option value="rating-asc">Rating: Low to High</option>
+        </select>
+      </div>
+      <div class="product-grid" id="product-grid" tabindex="0" aria-live="polite">
+        <!-- Products populate here -->
+      </div>
+      <div class="pagination" id="pagination" aria-label="Product Pagination">
+        <!-- Pagination buttons -->
+      </div>
+    </section>
+
+    <aside class="cart-sidebar" id="cart-sidebar" aria-label="Shopping Cart" tabindex="0" hidden>
+      <h2>Your Cart</h2>
+      <div class="cart-items-list" id="cart-items-list" aria-live="polite" aria-atomic="true">
+        <!-- Cart items go here -->
+      </div>
+      <div class="cart-summary">
+        <span>Total:</span>
+        <span id="cart-total-price">$0.00</span>
+      </div>
+      <button class="checkout-button" id="checkout-button" aria-label="Proceed to checkout" disabled>Checkout</button>
+    </aside>
+  </main>
+
+  <!-- Modals -->
+  <div id="modal-backdrop" class="modal-backdrop" role="dialog" aria-modal="true" aria-hidden="true" tabindex="-1" aria-labelledby="modal-title">
+    <!-- Modal content injected dynamically -->
+  </div>
+
+  <!-- Checkout Overlay -->
+  <div id="checkout-overlay" class="checkout-overlay" aria-hidden="true" tabindex="-1" aria-label="Checkout Process">
+    <div class="checkout-modal" role="dialog" aria-modal="true" aria-labelledby="checkout-title">
+      <h2 id="checkout-title" style="color:#7c3aed;">Checkout</h2>
+      <div class="checkout-stepper" role="list" aria-label="Checkout steps">
+        <div class="step active" data-step="1" role="listitem" aria-current="step">
+          <span class="material-icons">shopping_bag</span>
+          <span class="step-label">Cart</span>
+        </div>
+        <div class="step" data-step="2" role="listitem">
+          <span class="material-icons">person</span>
+          <span class="step-label">Shipping</span>
+        </div>
+        <div class="step" data-step="3" role="listitem">
+          <span class="material-icons">payment</span>
+          <span class="step-label">Payment</span>
+        </div>
+        <div class="step" data-step="4" role="listitem">
+          <span class="material-icons">check_circle</span>
+          <span class="step-label">Confirm</span>
+        </div>
+      </div>
+      <form class="checkout-form" id="checkout-form" novalidate aria-live="polite" aria-relevant="additions removals">
+        <!-- Dynamic steps content here -->
+      </form>
+      <div class="checkout-buttons">
+        <button type="button" class="btn-secondary" id="checkout-back-btn" disabled>Back</button>
+        <button type="submit" class="btn-primary" id="checkout-next-btn">Next</button>
+      </div>
+    </div>
+  </div>
+
+<script src="script.js"></script>
+</body>
+</html>
+
