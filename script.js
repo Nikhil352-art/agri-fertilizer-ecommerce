@@ -172,7 +172,7 @@
 
   // Utility: format price as currency
   function formatPrice(value) {
-    return `$${value.toFixed(2)}`;
+    return `INR ${value.toFixed(2)}`;
   }
 
   // Utility: calculate average rating for product
